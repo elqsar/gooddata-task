@@ -13,7 +13,7 @@ const defaultMonth = '1';
 const defaultYear = '2016';
 
 const GrossProfit = () => {
-  const { monthFilter, onMonthChange, onYearChange } = useDateFilter();
+  const { monthFilter, onMonthChange, onYearChange, year } = useDateFilter();
 
   const months = MONTHS.map((month, index) => {
     return <Option key={index} value={index} title={month} />;
@@ -51,7 +51,7 @@ const GrossProfit = () => {
       <div>
         <ColumnChart
           measures={[measures]}
-          filters={[allMonthFilter]}
+          filters={[allMonthFilter(year)]}
           viewBy={viewBy}
           projectId={projectId}
         />

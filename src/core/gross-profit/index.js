@@ -51,6 +51,7 @@ const useDateFilter = (config = defaultConfig) => {
     onMonthChange: onMonthChangeCallback,
     onYearChange: onYearChangeCallback,
     monthFilter,
+    year,
   };
 };
 

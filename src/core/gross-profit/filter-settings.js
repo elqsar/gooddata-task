@@ -23,12 +23,12 @@ export const viewBy = {
   },
 };
 
-export const allMonthFilter = {
+export const allMonthFilter = year => ({
   absoluteDateFilter: {
     dataSet: {
       uri: dateAttribute,
     },
-    from: '2016-01-01',
-    to: '2016-12-31',
+    from: `${year}-01-01`,
+    to: `${year}-12-31`,
   },
-};
+});
