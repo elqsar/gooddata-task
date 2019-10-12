@@ -11,18 +11,17 @@ const defaultConfig = {
 
 const isEventValid = event => event.target && event.target.value;
 
-const isMonthRangeValid = event => event.target.value >= 0 && event.target.value <= 11;
+const useDateFilter = (config = defaultConfig) => {
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(2016);
 
-const useColumnGraphDateFilter = (config = defaultConfig) => {
-  const [dateFrom, setDateFrom] = useState(config.defaultDateFrom);
-  const [dateTo, setDateTo] = useState(config.defaultDateTo);
   const [monthFilter, setMonthFilter] = useState({
     absoluteDateFilter: {
       dataSet: {
         uri: dateAttribute,
       },
-      from: dateFrom,
-      to: dateTo,
+      from: formatFirstDayOfMonth(year, month, config.dateFormat),
+      to: formatLastDayOfMonth(year, month, config.dateFormat),
     },
   });
 
@@ -30,26 +29,29 @@ const useColumnGraphDateFilter = (config = defaultConfig) => {
     setMonthFilter(previous => ({
       absoluteDateFilter: {
         ...previous.absoluteDateFilter,
-        from: dateFrom,
-        to: dateTo,
+        from: formatFirstDayOfMonth(year, month, config.dateFormat),
+        to: formatLastDayOfMonth(year, month, config.dateFormat),
       },
     }));
-  }, [dateFrom, dateTo]);
+  }, [month, year, config.dateFormat]);
 
-  const onMonthChange = event => {
-    if (isEventValid(event) && isMonthRangeValid(event)) {
-      const monthNumber = event.target.value;
-      setDateFrom(formatFirstDayOfMonth(config.defaultYear, monthNumber, config.dateFormat));
-      setDateTo(formatLastDayOfMonth(config.defaultYear, monthNumber, config.dateFormat));
+  const onChange = setter => event => {
+    if (isEventValid(event)) {
+      const value = parseInt(event.target.value);
+      if (!Number.isNaN(value)) {
+        setter(value);
+      }
     }
   };
 
-  const onDateChangeCallback = useCallback(event => onMonthChange(event), [dateTo, dateFrom]);
+  const onMonthChangeCallback = useCallback(event => onChange(setMonth)(event), [setMonth]);
+  const onYearChangeCallback = useCallback(event => onChange(setYear)(event), [setYear]);
 
   return {
-    onMonthChange: onDateChangeCallback,
+    onMonthChange: onMonthChangeCallback,
+    onYearChange: onYearChangeCallback,
     monthFilter,
   };
 };
 
-export default useColumnGraphDateFilter;
+export default useDateFilter;

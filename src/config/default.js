@@ -3,7 +3,7 @@ export const dateAttributeInMonths = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/o
 export const dateAttribute = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2180';
 export const projectId = 'xms7ga4tf3g3nzucd8380o2bev8oeknp';
 
-export const YEARS = ['2015', '2016', '2017', '2018', '2019'];
+export const YEARS = ['2016', '2017', '2018', '2019', '2020'];
 
 export const MONTHS = [
   'January',
