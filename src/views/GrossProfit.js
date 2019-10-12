@@ -1,6 +1,7 @@
 import React from 'react';
 import '@gooddata/react-components/styles/css/main.css';
 import { ColumnChart } from '@gooddata/react-components';
+import styled from 'styled-components';
 
 import Select from '../components/Select';
 import Option from '../components/Option';
@@ -8,6 +9,11 @@ import Header from '../components/Header';
 import { MONTHS, YEARS, projectId } from '../config/default';
 import useDateFilter from '../core/gross-profit';
 import { measures, viewBy, allMonthFilter } from '../core/gross-profit/filter-settings';
+
+const ChartContainer = styled.div`
+  height: 40vh;
+  width: 80vw;
+`;
 
 const defaultMonth = '1';
 const defaultYear = '2016';
@@ -40,22 +46,22 @@ const GrossProfit = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       <Header>
         $ Gross Profit in month {renderMonthDropdown()} {renderYearDropdown()}
       </Header>
-      <div>
+      <ChartContainer>
         <ColumnChart measures={[measures]} filters={[monthFilter]} projectId={projectId} />
-      </div>
+      </ChartContainer>
       <Header>$ Gross Profit - All months</Header>
-      <div>
+      <ChartContainer>
         <ColumnChart
           measures={[measures]}
           filters={[allMonthFilter(year)]}
           viewBy={viewBy}
           projectId={projectId}
         />
-      </div>
+      </ChartContainer>
     </div>
   );
 };
