@@ -1,31 +1,17 @@
 import React from 'react';
-
 import '@gooddata/react-components/styles/css/main.css';
+import { ColumnChart } from '@gooddata/react-components';
+
 import Select from '../components/Select';
 import Option from '../components/Option';
 import Header from '../components/Header';
-
-import { ColumnChart } from '@gooddata/react-components';
-
-const grossProfitMeasure = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6877';
-const dateAttributeInMonths = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2142';
-const dateAttribute = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2180';
-const projectId = 'xms7ga4tf3g3nzucd8380o2bev8oeknp';
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import {
+  dateAttribute,
+  dateAttributeInMonths,
+  grossProfitMeasure,
+  MONTHS,
+  projectId,
+} from '../config/default';
 
 const GrossProfit = () => {
   const getMonthFilter = () => {
