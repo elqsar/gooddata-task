@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
-import { lastDayOfMonth, format } from 'date-fns';
-
 import { dateAttribute } from '../../config/default';
+import { formatFirstDayOfMonth, formatLastDayOfMonth } from './helpers';
 
 const defaultConfig = {
   dateFormat: 'yyyy-MM-dd',
@@ -39,9 +38,9 @@ const useColumnGraphDateFilter = (config = defaultConfig) => {
 
   const onMonthChange = event => {
     if (isEventValid(event) && isMonthRangeValid(event)) {
-      const position = event.target.value;
-      setDateFrom(format(new Date(config.defaultYear, position), config.dateFormat));
-      setDateTo(format(lastDayOfMonth(new Date(config.defaultYear, position)), config.dateFormat));
+      const monthNumber = event.target.value;
+      setDateFrom(formatFirstDayOfMonth(config.defaultYear, monthNumber, config.dateFormat));
+      setDateTo(formatLastDayOfMonth(config.defaultYear, monthNumber, config.dateFormat));
     }
   };
 

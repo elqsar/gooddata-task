@@ -1,34 +1,9 @@
-import { dateAttribute, dateAttributeInMonths, grossProfitMeasure } from '../../config/default';
+import { format, lastDayOfMonth } from 'date-fns';
 
-export const measures = {
-  measure: {
-    localIdentifier: 'm2',
-    definition: {
-      measureDefinition: {
-        item: {
-          uri: grossProfitMeasure,
-        },
-      },
-    },
-    alias: '$ Gross Profit',
-  },
+export const formatLastDayOfMonth = (year, month, formatPattern) => {
+  return format(lastDayOfMonth(new Date(year, month)), formatPattern);
 };
 
-export const viewBy = {
-  visualizationAttribute: {
-    displayForm: {
-      uri: dateAttributeInMonths,
-    },
-    localIdentifier: 'a1',
-  },
-};
-
-export const allMonthFilter = {
-  absoluteDateFilter: {
-    dataSet: {
-      uri: dateAttribute,
-    },
-    from: '2016-01-01',
-    to: '2016-12-31',
-  },
+export const formatFirstDayOfMonth = (year, month, formatPattern) => {
+  return format(new Date(year, month), formatPattern);
 };

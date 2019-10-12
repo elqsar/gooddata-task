@@ -7,7 +7,7 @@ import Option from '../components/Option';
 import Header from '../components/Header';
 import { MONTHS, projectId } from '../config/default';
 import useColumnGraphDateFilter from '../core/gross-profit';
-import { measures, viewBy, allMonthFilter } from '../core/gross-profit/helpers';
+import { measures, viewBy, allMonthFilter } from '../core/gross-profit/filter-settings';
 
 const GrossProfit = () => {
   const { monthFilter, onMonthChange } = useColumnGraphDateFilter();
@@ -16,13 +16,13 @@ const GrossProfit = () => {
     return <Option key={index} value={index} title={month} />;
   });
 
-  const renderDropdown = () => {
+  const renderMonthDropdown = () => {
     return <Select onchange={onMonthChange}>{months}</Select>;
   };
 
   return (
     <div className="App">
-      <Header>$ Gross Profit in month {renderDropdown()} 2016</Header>
+      <Header>$ Gross Profit in month {renderMonthDropdown()} 2016</Header>
       <div>
         <ColumnChart measures={[measures]} filters={[monthFilter]} projectId={projectId} />
       </div>
