@@ -22,9 +22,9 @@ const StyledSelect = styled.select`
   }
 `;
 
-const Select = ({ defaultValue = 0, onchange = () => {}, children = [] }) => {
+const Select = ({ defaultValue = 0, onchange = () => {}, children = [], ...props }) => {
   return (
-    <StyledSelect defaultValue={defaultValue} onChange={onchange}>
+    <StyledSelect defaultValue={defaultValue} onChange={onchange} {...props}>
       {children}
     </StyledSelect>
   );
