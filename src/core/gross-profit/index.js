@@ -10,8 +10,9 @@ const defaultConfig = {
   defaultYear: 2016,
 };
 
-const isEventValid = event =>
-  event.target && event.target.value && event.target.value >= 0 && event.target.value <= 11;
+const isEventValid = event => event.target && event.target.value;
+
+const isMonthRangeValid = event => event.target.value >= 0 && event.target.value <= 11;
 
 const useColumnGraphDateFilter = (config = defaultConfig) => {
   const [dateFrom, setDateFrom] = useState(config.defaultDateFrom);
@@ -36,18 +37,18 @@ const useColumnGraphDateFilter = (config = defaultConfig) => {
     }));
   }, [dateFrom, dateTo]);
 
-  const onDateChange = event => {
-    if (isEventValid(event)) {
+  const onMonthChange = event => {
+    if (isEventValid(event) && isMonthRangeValid(event)) {
       const position = event.target.value;
       setDateFrom(format(new Date(config.defaultYear, position), config.dateFormat));
       setDateTo(format(lastDayOfMonth(new Date(config.defaultYear, position)), config.dateFormat));
     }
   };
 
-  const onDateChangeCallback = useCallback(event => onDateChange(event), [dateTo, dateFrom]);
+  const onDateChangeCallback = useCallback(event => onMonthChange(event), [dateTo, dateFrom]);
 
   return {
-    onDateChange: onDateChangeCallback,
+    onMonthChange: onDateChangeCallback,
     monthFilter,
   };
 };

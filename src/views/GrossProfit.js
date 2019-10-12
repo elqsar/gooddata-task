@@ -10,14 +10,14 @@ import useColumnGraphDateFilter from '../core/gross-profit';
 import { measures, viewBy, allMonthFilter } from '../core/gross-profit/helpers';
 
 const GrossProfit = () => {
-  const { monthFilter, onDateChange } = useColumnGraphDateFilter();
+  const { monthFilter, onMonthChange } = useColumnGraphDateFilter();
 
   const months = MONTHS.map((month, index) => {
     return <Option key={index} value={index} title={month} />;
   });
 
   const renderDropdown = () => {
-    return <Select onchange={onDateChange}>{months}</Select>;
+    return <Select onchange={onMonthChange}>{months}</Select>;
   };
 
   return (
