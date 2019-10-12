@@ -34,7 +34,7 @@ const useDateFilter = (config = defaultConfig) => {
         to: formatLastDayOfMonth(year, monthTo, config.dateFormat),
       },
     }));
-  }, [month, year, config.dateFormat]);
+  }, [month, monthTo, year, config.dateFormat]);
 
   const onChange = setters => event => {
     if (isEventValid(event)) {

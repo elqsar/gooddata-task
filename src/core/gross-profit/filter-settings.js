@@ -1,4 +1,4 @@
-import { dateAttribute, dateAttributeInMonths, grossProfitMeasure } from '../../config/default';
+import { dateAttributeInMonths, grossProfitMeasure } from '../../config/default';
 
 export const measures = {
   measure: {
