@@ -5,92 +5,32 @@ import { ColumnChart } from '@gooddata/react-components';
 import Select from '../components/Select';
 import Option from '../components/Option';
 import Header from '../components/Header';
-import {
-  dateAttribute,
-  dateAttributeInMonths,
-  grossProfitMeasure,
-  MONTHS,
-  projectId,
-} from '../config/default';
+import { MONTHS, projectId } from '../config/default';
+import useColumnGraphDateFilter from '../core/gross-profit';
+import { measures, viewBy, allMonthFilter } from '../core/gross-profit/helpers';
 
 const GrossProfit = () => {
-  const getMonthFilter = () => {
-    return {
-      absoluteDateFilter: {
-        dataSet: {
-          uri: dateAttribute,
-        },
-        from: '2016-01-01',
-        to: '2016-01-31',
-      },
-    };
-  };
+  const { monthFilter, onDateChange } = useColumnGraphDateFilter();
 
-  const getMeasures = () => {
-    return [
-      {
-        measure: {
-          localIdentifier: 'm2',
-          definition: {
-            measureDefinition: {
-              item: {
-                uri: grossProfitMeasure,
-              },
-            },
-          },
-          alias: '$ Gross Profit',
-        },
-      },
-    ];
-  };
-
-  const getViewBy = () => {
-    return {
-      visualizationAttribute: {
-        displayForm: {
-          uri: dateAttributeInMonths,
-        },
-        localIdentifier: 'a1',
-      },
-    };
-  };
+  const months = MONTHS.map((month, index) => {
+    return <Option key={index} value={index} title={month} />;
+  });
 
   const renderDropdown = () => {
-    return (
-      <Select defaultValue="0" onchange={event => console.log('Event', event.target.value)}>
-        {MONTHS.map((month, index) => {
-          return <Option key={index} value={index} title={month} />;
-        })}
-      </Select>
-    );
+    return <Select onchange={onDateChange}>{months}</Select>;
   };
-
-  const filters = [getMonthFilter()];
-  const byMonthFilter = [
-    {
-      absoluteDateFilter: {
-        dataSet: {
-          uri: dateAttribute,
-        },
-        from: '2016-01-01',
-        to: '2016-12-31',
-      },
-    },
-  ];
-  const measures = getMeasures();
-  const viewBy = getViewBy();
 
   return (
     <div className="App">
       <Header>$ Gross Profit in month {renderDropdown()} 2016</Header>
       <div>
-        <ColumnChart measures={measures} filters={filters} projectId={projectId} />
+        <ColumnChart measures={[measures]} filters={[monthFilter]} projectId={projectId} />
       </div>
       <Header>$ Gross Profit - All months</Header>
       <div>
         <ColumnChart
-          measures={measures}
-          filters={byMonthFilter}
+          measures={[measures]}
+          filters={[allMonthFilter]}
           viewBy={viewBy}
           projectId={projectId}
         />
