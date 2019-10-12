@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 import '@gooddata/react-components/styles/css/main.css';
-import Select from '../components/Select'
-import Option from '../components/Option'
-import Header from '../components/Header'
+import Select from '../components/Select';
+import Option from '../components/Option';
+import Header from '../components/Header';
 
 import { ColumnChart } from '@gooddata/react-components';
 
@@ -24,23 +24,21 @@ const MONTHS = [
   'September',
   'October',
   'November',
-  'December'
-]
+  'December',
+];
 
 const GrossProfit = () => {
-
   const getMonthFilter = () => {
     return {
       absoluteDateFilter: {
         dataSet: {
-          uri: dateAttribute
+          uri: dateAttribute,
         },
         from: '2016-01-01',
-        to: '2016-01-31'
-      }
-
-    }
-  }
+        to: '2016-01-31',
+      },
+    };
+  };
 
   const getMeasures = () => {
     return [
@@ -50,51 +48,49 @@ const GrossProfit = () => {
           definition: {
             measureDefinition: {
               item: {
-                uri: grossProfitMeasure
-              }
-            }
+                uri: grossProfitMeasure,
+              },
+            },
           },
-          alias: '$ Gross Profit'
-        }
-      }
-    ]
-  }
+          alias: '$ Gross Profit',
+        },
+      },
+    ];
+  };
 
   const getViewBy = () => {
     return {
-      visualizationAttribute:
-        {
-          displayForm: {
-            uri: dateAttributeInMonths
-          },
-          localIdentifier: 'a1'
-        }
-    }
-  }
+      visualizationAttribute: {
+        displayForm: {
+          uri: dateAttributeInMonths,
+        },
+        localIdentifier: 'a1',
+      },
+    };
+  };
 
   const renderDropdown = () => {
     return (
       <Select defaultValue="0" onchange={event => console.log('Event', event.target.value)}>
-        {
-          MONTHS.map((month, index) => {
-            return <Option key={index} value={index} title={month}/>
-          })
-        }
+        {MONTHS.map((month, index) => {
+          return <Option key={index} value={index} title={month} />;
+        })}
       </Select>
-    )
-  }
+    );
+  };
 
   const filters = [getMonthFilter()];
-  const byMonthFilter = [{
-    absoluteDateFilter: {
-      dataSet: {
-        uri: dateAttribute
+  const byMonthFilter = [
+    {
+      absoluteDateFilter: {
+        dataSet: {
+          uri: dateAttribute,
+        },
+        from: '2016-01-01',
+        to: '2016-12-31',
       },
-      from: '2016-01-01',
-      to: '2016-12-31'
-    }
-
-  }]
+    },
+  ];
   const measures = getMeasures();
   const viewBy = getViewBy();
 
@@ -102,11 +98,7 @@ const GrossProfit = () => {
     <div className="App">
       <Header>$ Gross Profit in month {renderDropdown()} 2016</Header>
       <div>
-        <ColumnChart
-          measures={measures}
-          filters={filters}
-          projectId={projectId}
-        />
+        <ColumnChart measures={measures} filters={filters} projectId={projectId} />
       </div>
       <Header>$ Gross Profit - All months</Header>
       <div>
@@ -119,6 +111,6 @@ const GrossProfit = () => {
       </div>
     </div>
   );
-}
+};
 
-export default GrossProfit
+export default GrossProfit;
