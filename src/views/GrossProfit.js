@@ -8,18 +8,24 @@ import Option from '../components/Option';
 import Header from '../components/Header';
 import { MONTHS, YEARS, projectId } from '../config/default';
 import useDateFilter from '../core/gross-profit';
-import { measures, viewBy, allMonthFilter } from '../core/gross-profit/filter-settings';
+import { measures, viewBy } from '../core/gross-profit/filter-settings';
 
 const ChartContainer = styled.div`
   height: 40vh;
   width: 80vw;
 `;
 
-const defaultMonth = '1';
+const defaultMonth = '0';
 const defaultYear = '2016';
 
 const GrossProfit = () => {
-  const { monthFilter, onMonthChange, onYearChange, year } = useDateFilter();
+  const { monthFilter, onMonthChange, onYearChange } = useDateFilter();
+  const { monthFilter: allYearsFilter, onYearChange: onAllYearChange } = useDateFilter({
+    dateFormat: 'yyyy-MM-dd',
+    year: 2016,
+    month: 0,
+    monthTo: 12,
+  });
 
   const months = MONTHS.map((month, index) => {
     return <Option key={index} value={index} title={month} />;
@@ -37,9 +43,14 @@ const GrossProfit = () => {
     );
   };
 
+  const change = event => {
+    onYearChange(event);
+    onAllYearChange(event);
+  };
+
   const renderYearDropdown = () => {
     return (
-      <Select defaulValue={defaultYear} onchange={onYearChange}>
+      <Select defaulValue={defaultYear} onchange={change}>
         {years}
       </Select>
     );
@@ -57,7 +68,7 @@ const GrossProfit = () => {
       <ChartContainer>
         <ColumnChart
           measures={[measures]}
-          filters={[allMonthFilter(year)]}
+          filters={[allYearsFilter]}
           viewBy={viewBy}
           projectId={projectId}
         />

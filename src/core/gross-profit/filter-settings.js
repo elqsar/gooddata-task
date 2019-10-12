@@ -22,13 +22,3 @@ export const viewBy = {
     localIdentifier: 'a1',
   },
 };
-
-export const allMonthFilter = year => ({
-  absoluteDateFilter: {
-    dataSet: {
-      uri: dateAttribute,
-    },
-    from: `${year}-01-01`,
-    to: `${year}-12-31`,
-  },
-});

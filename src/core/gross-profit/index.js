@@ -4,16 +4,17 @@ import { formatFirstDayOfMonth, formatLastDayOfMonth } from './helpers';
 
 const defaultConfig = {
   dateFormat: 'yyyy-MM-dd',
-  defaultDateFrom: '2016-01-01',
-  defaultDateTo: '2016-01-31',
-  defaultYear: 2016,
+  month: 0,
+  monthTo: 0,
+  year: 2016,
 };
 
 const isEventValid = event => event.target && event.target.value;
 
 const useDateFilter = (config = defaultConfig) => {
-  const [month, setMonth] = useState(0);
-  const [year, setYear] = useState(2016);
+  const [month, setMonth] = useState(config.month);
+  const [monthTo, setMonthTo] = useState(config.monthTo);
+  const [year, setYear] = useState(config.year);
 
   const [monthFilter, setMonthFilter] = useState({
     absoluteDateFilter: {
@@ -21,7 +22,7 @@ const useDateFilter = (config = defaultConfig) => {
         uri: dateAttribute,
       },
       from: formatFirstDayOfMonth(year, month, config.dateFormat),
-      to: formatLastDayOfMonth(year, month, config.dateFormat),
+      to: formatLastDayOfMonth(year, monthTo, config.dateFormat),
     },
   });
 
@@ -30,22 +31,26 @@ const useDateFilter = (config = defaultConfig) => {
       absoluteDateFilter: {
         ...previous.absoluteDateFilter,
         from: formatFirstDayOfMonth(year, month, config.dateFormat),
-        to: formatLastDayOfMonth(year, month, config.dateFormat),
+        to: formatLastDayOfMonth(year, monthTo, config.dateFormat),
       },
     }));
   }, [month, year, config.dateFormat]);
 
-  const onChange = setter => event => {
+  const onChange = setters => event => {
     if (isEventValid(event)) {
       const value = parseInt(event.target.value);
       if (!Number.isNaN(value)) {
-        setter(value);
+        for (const setter of setters) {
+          setter(value);
+        }
       }
     }
   };
 
-  const onMonthChangeCallback = useCallback(event => onChange(setMonth)(event), [setMonth]);
-  const onYearChangeCallback = useCallback(event => onChange(setYear)(event), [setYear]);
+  const onMonthChangeCallback = useCallback(event => onChange([setMonth, setMonthTo])(event), [
+    setMonth,
+  ]);
+  const onYearChangeCallback = useCallback(event => onChange([setYear])(event), [setYear]);
 
   return {
     onMonthChange: onMonthChangeCallback,
